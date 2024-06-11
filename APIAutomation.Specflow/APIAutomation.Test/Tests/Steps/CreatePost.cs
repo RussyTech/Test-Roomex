@@ -2,11 +2,6 @@
 using FluentAssertions;
 using Newtonsoft.Json;
 using RestSharp;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TechTalk.SpecFlow;
 
 namespace APIAutomation.Test.Tests.Steps
@@ -15,8 +10,8 @@ namespace APIAutomation.Test.Tests.Steps
     public class CreatePost
     {
         private readonly ScenarioContext _scenarioContext;
-        private RestResponse _response;
-        private RestClient _restClient;
+        private RestResponse? _response;
+        private readonly RestClient _restClient;
 
         public CreatePost(ScenarioContext scenarioContext)
         {
@@ -29,33 +24,58 @@ namespace APIAutomation.Test.Tests.Steps
         {
             var createPostRequest = new RestRequest(endPoint);
             var intUserId = int.Parse(userId);
-
-            PostsModal postBdy = new PostsModal();
-            postBdy.Title = title;
-            postBdy.Body = body;
-            postBdy.UserId = intUserId;
+            var postBdy = new PostsModal
+            {
+                Title = title,
+                Body = body,
+                UserId = intUserId
+            };
             createPostRequest.AddBody(postBdy);
 
             _response = await _restClient.ExecutePostAsync(createPostRequest);
+            if (_response == null)
+            {
+                throw new InvalidOperationException("Response is null");
+            }
         }
         [When(@"The response code is (.*)")]
         public void ResponseCodeIs(int responseCode)
         {
+            if (_response == null)
+            {
+                throw new InvalidOperationException("Response is null");
+            }
             Assert.Equal(responseCode, (int)_response.StatusCode);
         }
 
         [Then(@"The response should contain (.*) (.*) (.*)")]
         public void ResponseContainsStatusAs(string title, string body, string userId)
         {
+            if (_response == null)
+            {
+                throw new InvalidOperationException("No Response body");
+            }
+
+            if (string.IsNullOrEmpty(_response.Content))
+            {
+                throw new InvalidOperationException("The response body is null or empty");
+            }
+
+            var jsonRoot = JsonConvert.DeserializeObject<PostsModal>(_response.Content);
+            if (jsonRoot == null)
+            {
+                throw new InvalidOperationException("Unable to deserialize");
+            }
+
             int userIdInt = int.Parse(userId);
-            var JsonRoot = JsonConvert.DeserializeObject<PostsModal>(_response.Content);
-            var confirmTitleResponse = JsonRoot.Title;
-            var confirmBodyResponse = JsonRoot.Body;
-            var confirmUserIdResponse = JsonRoot.UserId;
-            JsonRoot.Should().NotBeNull();
-            confirmTitleResponse.Should().Contain(title);
-            confirmBodyResponse.Should().Contain(body);
-            confirmUserIdResponse.Should().Be(userIdInt);
+
+            jsonRoot.Title.Should().NotBeNullOrEmpty();
+            jsonRoot.Title.Should().Contain(title);
+
+            jsonRoot.Body.Should().NotBeNullOrEmpty();
+            jsonRoot.Body.Should().Contain(body);
+
+            jsonRoot.UserId.Should().Be(userIdInt);
 
         }
     }

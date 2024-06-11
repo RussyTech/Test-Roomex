@@ -25,6 +25,11 @@ namespace APIAutomation.Test.Tests.Steps
             var request = new RestRequest(endpoint, Method.Get);
             request.AddUrlSegment("id", postId);
             _response = await _restClient.ExecuteAsync(request);
+            if (_response == null)
+        {
+            throw new InvalidOperationException("Response is null");
+        }
+        
         }
 
         [When(@"A (.*) response is returned")]
@@ -36,7 +41,21 @@ namespace APIAutomation.Test.Tests.Steps
         [Then(@"The response should include a list of comments containing email addresses")]
         public void TheResponseShouldContainemailAddresses()
         {
+            if (_response == null)
+            {
+                throw new InvalidOperationException("No Response body");
+            }
+
+            if (string.IsNullOrEmpty(_response.Content))
+            {
+                throw new InvalidOperationException("The response body is null or empty");
+            }
+
             var JsonRoot = JsonConvert.DeserializeObject<List<CommentModal>>(_response.Content);
+            if (JsonRoot == null)
+            {
+                throw new InvalidOperationException("Unable to deserialize");
+            }
             foreach (var comment in JsonRoot)
             {
                 comment.Email.Should().NotBeNullOrEmpty();

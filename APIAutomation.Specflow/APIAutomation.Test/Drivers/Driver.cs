@@ -14,7 +14,10 @@ namespace APIAutomation.Test.Drivers
                .Build();
 
             BaseUrl = configuration["ApiConfiguration:BaseUrl"];
-
+            if (string.IsNullOrWhiteSpace(BaseUrl))
+            {
+                throw new InvalidOperationException("BaseUrl is null or empty in the configuration file");
+            }
             var restClientOptions = new RestClientOptions
             {
                 BaseUrl = new Uri(BaseUrl),

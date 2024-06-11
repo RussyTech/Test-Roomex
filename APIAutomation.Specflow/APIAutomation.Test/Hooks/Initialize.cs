@@ -16,6 +16,7 @@ namespace APIAutomation.Test.Hooks
         {
 
             Driver driver = new Driver(_scenarioContext);
+            _scenarioContext.Set(driver, "Driver");
         }
     }
 }
