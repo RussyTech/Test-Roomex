@@ -1,0 +1,90 @@
+# Ignore build output directories
+bin/
+obj/
+
+# Ignore user-specific files
+*.user
+*.userosscache
+*.suo
+*.sln.docstates
+
+# Ignore Rider project files
+.idea/
+
+# Ignore Visual Studio Code project files
+.vscode/
+
+# Ignore NUnit, MSTest, xUnit test results
+TestResults/
+
+# Ignore SpecFlow files
+# SpecFlow generates various files, which should not be committed
+*.feature.cs
+*.feature.vb
+
+# Ignore coverage reports
+coverage/
+*.coverage
+*.coveragexml
+*.codecov
+coverage.opencover.xml
+lcov-report/
+
+# Ignore log files
+*.log
+
+# Ignore package directories
+packages/
+# Uncomment if necessary, but generally it's not recommended to ignore NuGet packages
+# **/packages/*
+
+# Ignore NuGet packages
+*.nupkg
+# Uncomment if necessary, but generally it's not recommended to ignore the lock file
+# packages.lock.json
+
+# Ignore Web projects
+node_modules/
+bower_components/
+
+# Ignore various IDE specific files
+.idea/
+.vscode/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln.docstates
+
+# Ignore Resharper files
+*.DotSettings.user
+
+# Ignore JetBrains Rider files
+.idea/
+*.sln.iml
+
+# Ignore coverage analysis files
+*.coverage
+*.coveragexml
+*.ncrunch*
+_.*.crunchplugin.*
+
+# Ignore CodeRush files
+.cr/
+
+# Ignore NCrunch
+.ncrunchproject
+.ncrunchsolution
+
+# Ignore SonarQube files
+.sonarqube/
+
+# Ignore StyleCop analysis file
+StyleCopReport.xml
+
+# Ignore project files
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+# Ignore Publish folder
+Publish/

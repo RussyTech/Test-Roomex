@@ -1,0 +1,59 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+
+# Dependency directories
+node_modules/
+bower_components/
+
+# Build directories
+dist/
+build/
+
+# Temporary files
+*.tmp
+*.swp
+*.swo
+
+# IntelliJ IDEA files
+.idea/
+*.iml
+
+# VSCode files
+.vscode/
+
+# WebdriverIO specific files
+allure-report/
+errorShots/
+junit-report/
+.nyc_output/
+
+# Coverage directories
+coverage/
+
+# Environment variables
+.env
+.env.local
+.env.test
+.env.production
+
+# Output files
+output/
+
+# Lock files
+package-lock.json
+yarn.lock
+
+# MacOS
+.DS_Store
+
+# Sentry CLI
+.sentryclirc
+
+# Cucumber reports
+*.cucumber
+*.cucumber.json
+
+# TypeScript specific
+*.tsbuildinfo
