@@ -88,3 +88,5 @@ artifacts/
 
 # Ignore Publish folder
 Publish/
+
+.vs/
