@@ -36,7 +36,7 @@ namespace APIAutomation.Test.Tests.Steps
             postBdy.UserId = intUserId;
             createPostRequest.AddBody(postBdy);
 
-            _response = _restClient.ExecutePostAsync(createPostRequest).Result;
+            _response = await _restClient.ExecutePostAsync(createPostRequest);
         }
         [When(@"The response code is (.*)")]
         public void ResponseCodeIs(int responseCode)
